@@ -12,7 +12,11 @@
   <link rel="stylesheet" href="{{ asset('majestic/vendors/base/vendor.bundle.base.css') }}">
   <!-- endinject -->
   <!-- plugin css for this page -->
-  <link rel="stylesheet" href="{{ asset('majestic/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('majestic/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}"> --}}
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('majestic/css/style.css') }}">
@@ -41,10 +45,10 @@
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown"><span class="nav-profile-name">Hai, {{ Auth::user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              {{-- <a class="dropdown-item">
                 <i class="mdi mdi-settings text-primary"></i>
                 Settings
-              </a>
+              </a> --}}
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="mdi mdi-logout text-primary"></i>
                 Logout
@@ -66,7 +70,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="home">
               <i class="mdi mdi-home menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -80,8 +84,8 @@
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="peserta"> Daftar Peserta </a></li>
-                <li class="nav-item"> <a class="nav-link" href="jenis"> Jenis Vaksin </a></li>
                 <li class="nav-item"> <a class="nav-link" href="tanggal"> Atur Tanggal </a></li>
+                <li class="nav-item"> <a class="nav-link" href="jenis"> Jenis Vaksin </a></li>
               </ul>
             </div>
           </li>
@@ -142,10 +146,23 @@
   <!-- plugins:js -->
   <script src="{{ asset('majestic/vendors/base/vendor.bundle.base.js') }}"></script>
   <!-- endinject -->
+  <script src="{{ asset('js/jquery.min.js') }}"></script>
   <!-- Plugin js for this page-->
-  <script src="{{ asset('majestic/vendors/chart.js/Chart.min.js') }}"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
+  {{-- <script src="{{ asset('majestic/vendors/chart.js/Chart.min.js') }}"></script>
   <script src="{{ asset('majestic/vendors/datatables.net/jquery.dataTables.js') }}"></script>
-  <script src="{{ asset('majestic/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
+  <script src="{{ asset('majestic/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script> --}}
   <!-- End plugin js for this page-->
   <!-- inject:js -->
   <script src="{{ asset('majestic/js/off-canvas.js') }}"></script>
@@ -153,10 +170,10 @@
   <script src="{{ asset('majestic/js/template.js') }}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="{{ asset('majestic/js/dashboard.js') }}"></script>
+  {{-- <script src="{{ asset('majestic/js/dashboard.js') }}"></script>
   <script src="{{ asset('majestic/js/data-table.js') }}"></script>
   <script src="{{ asset('majestic/js/jquery.dataTables.js') }}"></script>
-  <script src="{{ asset('majestic/js/dataTables.bootstrap4.js') }}') }}"></script>
+  <script src="{{ asset('majestic/js/dataTables.bootstrap4.js') }}') }}"></script> --}}
   <!-- End custom js for this page-->
   <script src="{{ asset('majestic/js/jquery.cookie.js') }}" type="text/javascript"></script>
 </body>

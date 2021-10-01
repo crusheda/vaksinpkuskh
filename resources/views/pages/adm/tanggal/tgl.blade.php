@@ -11,7 +11,7 @@
             <div class="card-body">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambah">Tambah</button><br><br>
                 <div class="table-responsive">
-                    <table id="recent-purchases-listing" class="table table-hover">
+                    <table id="table" class="table table-hover">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -19,6 +19,7 @@
                             <th>Tanggal</th>
                             <th>Jam</th>
                             <th>Kuota</th>
+                            <th>Ditambahkan</th>
                             <th>Aksi</th>
                         </tr>
                         </thead>
@@ -27,15 +28,15 @@
                             @foreach($list['show'] as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->id_vaksin }}</td>
-                                    <td>{{ $item->tgl }}</td>
-                                    <td>{{ $item->jam }}</td>
+                                    <td>{{ $item->nama_vaksin }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tgl)->isoFormat('dddd, D MMMM Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->jam)->isoFormat('HH:mm a') }}</td>
                                     <td>{{ $item->kuota }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <button type="button" class="btn btn-warning text-white btn-icon-text" data-toggle="modal" data-target="#ubah{{ $item->id }}"><i class="bx bx-edit btn-icon-prepend"></i> Ubah</button>
-                                            <button type="button" class="btn btn-danger btn-icon-text" data-toggle="modal" data-target="#hapus{{ $item->id }}"><i class="bx bx-trash btn-icon-prepend"></i> Hapus</button>
+                                            <button type="button" class="btn btn-danger btn-icon-text" data-toggle="modal" data-target="#hapus{{ $item->id }}"><i class="bx bx-trash btn-icon-prepend"></i> Nonaktifkan</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -129,7 +130,7 @@
                         <br>
                     </div>
                     <div class="col">
-                        <label>Stok :</label>
+                        <label>Kuota :</label>
                         <input type="number" name="kuota" class="form-control" value="{{ $item->kuota }}" placeholder="" required>
                         <br>
                     </div>
@@ -159,17 +160,20 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         <div class="modal-body">
+            <p><strong>CATATAN :</strong> Tanggal tidak akan terhapus oleh sistem, hanya saja tidak ditampilkan/dinonaktifkan di sistem ini untuk menghindari data yang masuk dengan tanggal yang kadaluwarsa.</p>
+            <hr>
             <p>
-                Nama Vaksin : {{ $item->nama_vaksin }} <br>
-                Stok : {{ $item->stok }}
+                Jenis Vaksin : {{ $item->id_vaksin }} <br>
+                Tanggal : {{ $item->datetime }} <br>
+                Kuota : {{ $item->kuota }}
             </p>
         </div>
         <div class="modal-footer">
             @if(count($list) > 0)
-                <form action="{{ route('jenis.destroy', $item->id) }}" method="POST">
+                <form action="{{ route('tanggal.destroy', $item->id) }}" method="POST">
                     @method('DELETE')
                     @csrf
-                    <button class="btn btn-danger btn-sm">Hapus</button>
+                    <button class="btn btn-danger btn-sm">Nonaktifkan</button>
                 </form>
             @endif
         </div>
@@ -178,4 +182,28 @@
 </div>
 @endforeach
 
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable(
+            {
+                paging: true,
+                searching: true,
+                dom: 'Bfrtip',
+                stateSave: true,
+                buttons: [
+                    'excel', 'pdf','colvis'
+                ],
+                language: {
+                    buttons: {
+                        colvis: 'Sembunyikan Kolom',
+                        excel: 'Jadikan Excell',
+                        pdf: 'Jadikan PDF',
+                    }
+                },
+                order: [[ 5, "desc" ]]
+            }
+        );
+    } );
+</script>
 @endsection

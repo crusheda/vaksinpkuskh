@@ -8,18 +8,19 @@
             <div class="card-body">
                 <p class="card-title">Peserta Terdaftar Vaksinasi</p>
                 <div class="table-responsive">
-                <table id="recent-purchases-listing" class="table">
+                <table id="table" class="table table-hover">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Tgl Daftar</th>
+                        <th>Tgl</th>
+                        <th>Jam</th>
                         <th>Vaksin</th>
                         <th>Nama Lengkap</th>
                         <th>NIK</th>
                         <th>HP</th>
                         <th>Alamat</th>
                         <th>Ditambahkan</th>
-                        <th>Aksi</th>
+                        {{-- <th>Aksi</th> --}}
                     </tr>
                     </thead>
                     <tbody>
@@ -27,14 +28,15 @@
                         @foreach($list['show'] as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->id_tgl }}</td>
-                                <td>{{ $item->id_vaksin }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tgl_vaksin)->isoFormat('dddd, D MMMM Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tgl_vaksin)->isoFormat('HH:mm a') }}</td>
+                                <td>{{ $item->nama_vaksin }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->nik }}</td>
                                 <td>{{ $item->hp }}</td>
                                 <td>{{ $item->alamat }}</td>
                                 <td>{{ $item->created_at }}</td>
-                                <td></td>
+                                {{-- <td></td> --}}
                             </tr>
                         @endforeach
                         @endif
@@ -45,4 +47,29 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable(
+            {
+                paging: true,
+                searching: true,
+                dom: 'Bfrtip',
+                stateSave: true,
+                buttons: [
+                    'excel', 'pdf','colvis'
+                ],
+                language: {
+                    buttons: {
+                        colvis: 'Sembunyikan Kolom',
+                        excel: 'Jadikan Excell',
+                        pdf: 'Jadikan PDF',
+                    }
+                },
+                order: [[ 8, "desc" ]]
+            }
+        );
+    } );
+</script>
 @endsection

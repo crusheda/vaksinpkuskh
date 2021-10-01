@@ -11,7 +11,7 @@
             <div class="card-body">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#tambah">Tambah</button><br><br>
                 <div class="table-responsive">
-                    <table id="recent-purchases-listing" class="table table-hover">
+                    <table id="table" class="table table-hover">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -152,5 +152,30 @@
     </div>
 </div>
 @endforeach
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable(
+            {
+                paging: true,
+                searching: true,
+                dom: 'Bfrtip',
+                stateSave: true,
+                buttons: [
+                    'excel', 'pdf','colvis'
+                ],
+                language: {
+                    buttons: {
+                        colvis: 'Sembunyikan Kolom',
+                        excel: 'Jadikan Excell',
+                        pdf: 'Jadikan PDF',
+                    }
+                },
+                order: [[ 3, "desc" ]]
+            }
+        );
+    } );
+</script>
 
 @endsection

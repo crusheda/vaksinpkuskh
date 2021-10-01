@@ -26,11 +26,18 @@ class vaksinController extends Controller
         $jenis = jenis_vaksin::get();
         $tgl = tanggal_vaksin::get();
 
+        for($count = 0; $count < count($tgl); $count++)
+        {
+            $pushKuota[] = $tgl[$count]->kuota;
+        }
+        $total_kuota = array_sum($pushKuota);
+
         // print_r($tgl);
         // die();
 
         $data = [
             'show' => $show,
+            'total_kuota' => $total_kuota,
             'jenis'=> $jenis,
             'tgl'  => $tgl,
         ];
@@ -120,6 +127,13 @@ class vaksinController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|max:250',
+            'nik' => 'required|min:15|max:16',
+            'hp' => 'required|min:10|max:14',
+            'alamat' => 'required|min:10|max:250',
+        ]);
+
         $data = new peserta_vaksin;
         $data->id_vaksin = $request->vaksin;
         $data->id_tgl = $request->id_tgl;
@@ -130,9 +144,10 @@ class vaksinController extends Controller
         $data->save();
 
         $getTgl = tanggal_vaksin::where('id', $request->id_tgl)->first();
-        $tgl = Carbon::parse($getTgl->datetime)->isoFormat('dddd, D MMMM Y , HH:mm a');
+        $tgl = Carbon::parse($getTgl->datetime)->subMinutes(30);
+        $minTgl = $tgl->isoFormat('dddd, D MMMM Y , HH:mm a');
 
-        return redirect()->back()->with('message','Pendaftaran a/n '.$request->nama.' Berhasil. Silakan datang kembali dengan membawa semua persyaratan Pada '.$tgl.'. Terima kasih');
+        return redirect()->back()->with('message','Pendaftaran a/n '.$request->nama.' Berhasil. Silakan datang kembali dengan membawa semua persyaratan Pada '.$minTgl.'. Terima kasih');
     }
 
     /**

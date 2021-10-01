@@ -2,7 +2,7 @@
 
 @section('content')
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
+  <section id="hero" class="d-flex align-items-center" style="margin-top:50px">
 
     <div class="container">
       <div class="row">
@@ -40,20 +40,20 @@
 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-group"></i></div>
-              <h4 class="title"><a href="">Kuota 250 Orang</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+              <h4 class="title"><a>Total Kuota {{ $list['total_kuota'] }} Orang</a></h4>
+              <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem molestias ratione vitae quam laudantium officiis. Quos debitis harum, repellat laboriosam quidem tempora minus quibusdam itaque adipisci autem nesciunt earum ipsa.</p>
             </div>
 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-gift"></i></div>
-              <h4 class="title"><a href="">Door Prize Menarik</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+              <h4 class="title"><a>Door Prize Menarik</a></h4>
+              <p class="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus veritatis ab id itaque ex velit ipsam, dolor, blanditiis dicta voluptatum labore nisi mollitia odit corporis adipisci! Debitis perferendis corrupti impedit?</p>
             </div>
 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-check-shield"></i></div>
-              <h4 class="title"><a href="">Kartu Vaksinasi</a></h4>
-              <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
+              <h4 class="title"><a>Kartu Vaksinasi</a></h4>
+              <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit incidunt totam distinctio dignissimos eos possimus temporibus fugiat, dolore quasi beatae voluptatem, quidem atque blanditiis ipsa ea dolor. Excepturi, quae itaque!</p>
             </div>
 
           </div>
@@ -151,7 +151,7 @@
               <div class="phone">
                 <i class="bi bi-whatsapp"></i>
                 <h4>Whatsapp:</h4>
-                <p><a href="{{ url('wa.me/62xxx') }}">-</a></p>
+                <p><a href="https://web.whatsapp.com/send?phone=6289662806699&text=Assalamualaikum&app_absent=0">Chat Kami!</a></p>
               </div>
 
             </div>
@@ -283,8 +283,8 @@
             });
 
             $('#apivaksin').change(function() {
-            document.getElementById('kuota').innerHTML = '-';
-            $("#btndaftar").attr('disabled', true);
+                document.getElementById('kuota').innerHTML = '-';
+                $("#btndaftar").attr('disabled', true);
             // console.log(this.value);
 
                 $.ajax({
@@ -301,7 +301,7 @@
                         var sel = document.getElementById('apitgl');
                         for(var i = 0; i < len; i++) {
                             var opt = document.createElement('option');
-                            var tgl = moment(res[i]['tgl']).format('dddd, D MMMM Y');
+                            var tgl = moment(res[i]['tgl']).format('DD-MM-YYYY');
                             opt.innerHTML = tgl;
                             opt.value = res[i]['tgl'];
                             sel.appendChild(opt);
@@ -311,8 +311,8 @@
             });
 
             $('#apitgl').change(function() {
-            document.getElementById('kuota').innerHTML = '-';
-            $("#btndaftar").attr('disabled', true);
+                document.getElementById('kuota').innerHTML = '-';
+                $("#btndaftar").attr('disabled', true);
 
                 $.ajax({
                     url: "./api/jam/"+this.value,

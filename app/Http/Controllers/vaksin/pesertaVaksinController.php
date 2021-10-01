@@ -20,7 +20,12 @@ class pesertaVaksinController extends Controller
      */
     public function index()
     {
-        $show = peserta_vaksin::get();
+        $show = DB::table('daftar_vaksin')
+                ->join('jenis_vaksin', 'daftar_vaksin.id_vaksin', '=', 'jenis_vaksin.id')
+                ->join('tgl_vaksin', 'daftar_vaksin.id_tgl', '=', 'tgl_vaksin.id')
+                ->select('daftar_vaksin.*','jenis_vaksin.nama_vaksin','tgl_vaksin.datetime as tgl_vaksin')
+                ->where('daftar_vaksin.deleted_at', null)
+                ->get();
 
         $data = [
             'show' => $show

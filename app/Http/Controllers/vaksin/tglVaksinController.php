@@ -22,11 +22,17 @@ class tglVaksinController extends Controller
      */
     public function index()
     {
-        $show = tanggal_vaksin::get();
+        $tgl = tanggal_vaksin::get();
         $jenis = jenis_vaksin::get();
+        $show = DB::table('tgl_vaksin')
+                ->join('jenis_vaksin', 'tgl_vaksin.id_vaksin', '=', 'jenis_vaksin.id')
+                ->select('tgl_vaksin.*','jenis_vaksin.nama_vaksin')
+                ->where('tgl_vaksin.deleted_at', null)
+                ->get();
 
         $data = [
             'show' => $show,
+            'tgl' => $tgl,
             'jenis' => $jenis
         ];
 
@@ -123,6 +129,6 @@ class tglVaksinController extends Controller
         $data = tanggal_vaksin::find($id);
         $data->delete();
 
-        return redirect()->back()->with('message','Hapus Tanggal Vaksin Berhasil');
+        return redirect()->back()->with('message','Tanggal Vaksin Berhasil Dinonaktifkan');
     }
 }
