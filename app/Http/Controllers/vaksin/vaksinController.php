@@ -26,11 +26,15 @@ class vaksinController extends Controller
         $jenis = jenis_vaksin::get();
         $tgl = tanggal_vaksin::get();
 
-        for($count = 0; $count < count($tgl); $count++)
-        {
-            $pushKuota[] = $tgl[$count]->kuota;
+        if (!empty($tgl)) {
+            for($count = 0; $count < count($tgl); $count++)
+            {
+                $pushKuota[] = $tgl[$count]->kuota;
+            }
+            $total_kuota = array_sum($pushKuota);
+        } else {
+            $total_kuota = 0;
         }
-        $total_kuota = array_sum($pushKuota);
 
         // print_r($tgl);
         // die();
@@ -69,6 +73,7 @@ class vaksinController extends Controller
         $data = DB::table('tgl_vaksin')
                 ->select('tgl')
                 ->where('id_vaksin', $id)
+                ->where('deleted_at', null)
                 ->groupBy('tgl')
                 ->get();
 
@@ -80,6 +85,7 @@ class vaksinController extends Controller
         $data = DB::table('tgl_vaksin')
                 ->select('id','jam')
                 ->where('tgl', $id)
+                ->where('deleted_at', null)
                 ->groupBy('id','jam')
                 ->get();
 
