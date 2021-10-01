@@ -26,7 +26,9 @@ class vaksinController extends Controller
         $jenis = jenis_vaksin::get();
         $tgl = tanggal_vaksin::get();
 
-        if (!empty($tgl)) {
+        // print_r($tgl);
+        // die();
+        if (count($tgl) > 0) {
             for($count = 0; $count < count($tgl); $count++)
             {
                 $pushKuota[] = $tgl[$count]->kuota;
